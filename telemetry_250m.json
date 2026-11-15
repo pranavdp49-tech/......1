@@ -1,0 +1,155 @@
+{
+  "metadata": {
+    "target_grid": "Common 250 m Canvas (EPSG:3035 / EPSG:4326)",
+    "latitude": 51.7606,
+    "longitude": 14.3329,
+    "reference_station": "DWD Cottbus Station (ID: 00880)",
+    "license": "CC BY 4.0 DWD Climate Data Center & Open NASA ESDS",
+    "execution_timestamp": "2026-11-15T15:02:57.951165"
+  },
+  "sources": [
+    {
+      "id": 1,
+      "name": "NASA POWER",
+      "resolution": "~50 km daily (1981-2026)",
+      "used_for": "frost, heat, FAO-56 reference ET, water balance, dry spells, heavy rain, trends",
+      "resampling_method": "Bilinear / Topographic lapse-rate spline",
+      "metrics": {
+        "fao56_et0_mm_day": 2.17,
+        "daily_precip_mm": 1.27,
+        "water_balance_deficit_mm_day": -0.9,
+        "heat_wave_days_gt_32c": 2,
+        "frost_days_le_0c": 5
+      }
+    },
+    {
+      "id": 2,
+      "name": "NASA SMAP L4",
+      "resolution": "9 km, 3-hourly / daily",
+      "used_for": "model input, soil-moisture map and trend",
+      "resampling_method": "Bilinear Interpolation to 250 m",
+      "metrics": {
+        "root_zone_wetness": 0.36,
+        "seasonal_trend_pct": -14.2
+      }
+    },
+    {
+      "id": 3,
+      "name": "NASA GPM IMERG",
+      "resolution": "~11 km monthly",
+      "used_for": "model input, summer-rain map",
+      "resampling_method": "Bilinear Interpolation to 250 m",
+      "metrics": {
+        "summer_rain_mm": 105.6,
+        "climatology_anomaly_mm": -89.4
+      }
+    },
+    {
+      "id": 4,
+      "name": "NASA MODIS (MOD13Q1, MOD16A2GF, MOD11A2)",
+      "resolution": "250 m (NDVI), 500 m (ET), 1 km (LST)",
+      "used_for": "model target (crop greenness), evaporative demand, surface temperature, common 250 m grid",
+      "resampling_method": "Master Grid Canvas Reference",
+      "metrics": {
+        "target_ndvi": 0.59,
+        "et_pet_ratio": 0.62,
+        "lst_celsius": 12.8
+      }
+    },
+    {
+      "id": 5,
+      "name": "NASA ECOSTRESS",
+      "resolution": "70 m (via AppEEARS)",
+      "used_for": "field-level summer water stress (optional)",
+      "resampling_method": "Area-weighted spatial average to 250 m",
+      "metrics": {
+        "evaporative_stress_index": 0.33,
+        "classification": "Moderate Summer Water Stress"
+      }
+    },
+    {
+      "id": 6,
+      "name": "NASA GRACE / GRACE-FO",
+      "resolution": "0.5 deg JPL mascons",
+      "used_for": "regional water-storage trend",
+      "resampling_method": "Bilinear Interpolation to 250 m",
+      "metrics": {
+        "tws_trend_mm_yr": -14.2,
+        "depletion_rate": "Regional groundwater deficit active"
+      }
+    },
+    {
+      "id": 7,
+      "name": "NASA GLDAS Noah 2.1",
+      "resolution": "0.25 deg, 3-hourly temperature",
+      "used_for": "hot days, late frost, degree days",
+      "resampling_method": "Bilinear Interpolation to 250 m",
+      "metrics": {
+        "growing_degree_days_base10": 492,
+        "late_frost_risk_days": 5
+      }
+    },
+    {
+      "id": 8,
+      "name": "NASA SRTM",
+      "resolution": "30 m static",
+      "used_for": "slope, terrain position",
+      "resampling_method": "Zonal mean aggregation to 250 m",
+      "metrics": {
+        "elevation_m": 71.29,
+        "slope_pct": 1.8,
+        "terrain_position_index": "Flat Valley / Glacial Plain"
+      }
+    },
+    {
+      "id": 9,
+      "name": "ESA Sentinel-2 L2A",
+      "resolution": "10 m, 5-day revisit",
+      "used_for": "bare-soil months per field",
+      "resampling_method": "Field zonal aggregation (BSI > 0.1)",
+      "metrics": {
+        "bare_soil_duration_months": 3.5
+      }
+    },
+    {
+      "id": 10,
+      "name": "JRC EUCROPMAP 2018, 2022",
+      "resolution": "10 m pan-European",
+      "used_for": "training labels, current rotation",
+      "resampling_method": "Spatial Mode (Majority crop class)",
+      "metrics": {
+        "rotation_sequence": "Winter Wheat (1110) -> Winter Rapeseed (1210) -> Silage Maize (1120)",
+        "primary_label": "Winter Wheat (1110)"
+      }
+    },
+    {
+      "id": 11,
+      "name": "ISRIC SoilGrids 2.0",
+      "resolution": "250 m native grid",
+      "used_for": "sand, clay, organic carbon, pH, density",
+      "resampling_method": "Direct 1:1 Pixel Alignment",
+      "metrics": {
+        "sand_pct": 62.0,
+        "clay_pct": 14.0,
+        "soc_g_kg": 13.5,
+        "ph_h2o": 5.6,
+        "bulk_density_g_cm3": 1.48,
+        "available_water_capacity_mm": 119.8
+      }
+    },
+    {
+      "id": 12,
+      "name": "DWD Climate Data Center",
+      "resolution": "Point Station (Cottbus ID 00880)",
+      "used_for": "ground check of NASA POWER (CC BY 4.0)",
+      "resampling_method": "Point Station Quantile Bias Correction",
+      "metrics": {
+        "station_id": "00880",
+        "station_name": "Cottbus (Brandenburg)",
+        "t2m_bias_adjustment_c": 0.32,
+        "pearson_correlation_r": 0.964,
+        "precipitation_concordance_pct": 98.2
+      }
+    }
+  ]
+}

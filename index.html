@@ -182,7 +182,7 @@
                   <label for="input-latitude">GPS Latitude</label>
                   <span class="form-subtext">Auto-updated on map click</span>
                 </div>
-                <input type="number" id="input-latitude" class="input-field mono" value="20.5937" step="any" min="-90" max="90" required>
+                <input type="number" id="input-latitude" class="input-field mono" value="51.7606" step="any" min="-90" max="90" required>
               </div>
 
               <div class="field-col-6 form-group">
@@ -190,18 +190,37 @@
                   <label for="input-longitude">GPS Longitude</label>
                   <span class="form-subtext">Auto-updated on map click</span>
                 </div>
-                <input type="number" id="input-longitude" class="input-field mono" value="78.9629" step="any" min="-180" max="180" required>
+                <input type="number" id="input-longitude" class="input-field mono" value="14.3329" step="any" min="-180" max="180" required>
               </div>
 
-              <!-- Device Geolocation Action -->
+              <!-- Regional Presets & Device Geolocation -->
               <div class="field-col-12 form-group">
-                <div class="device-gps-row" role="group" aria-label="Device Geolocation">
+                <div class="form-label">
+                  <span>Regional Validation Presets</span>
+                  <span class="form-subtext">Click to benchmark against validated stations and agro-climatic zones</span>
+                </div>
+                <div class="device-gps-row" role="group" aria-label="Presets and Geolocation">
                   <button type="button" id="btn-device-gps" class="preset-pill-btn" title="Detect device geolocation">
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                       <circle cx="12" cy="12" r="10"></circle>
                       <circle cx="12" cy="12" r="3"></circle>
                     </svg>
                     Use Device GPS
+                  </button>
+                  <button type="button" class="preset-pill-btn active" data-lat="51.7606" data-lng="14.3329" data-crop="Wheat" data-season="Summer" title="Cottbus Station, Germany (DWD Ground Check & Reference Station)">
+                    <span class="pill-dot-dwd"></span> Cottbus Station (DWD Check)
+                  </button>
+                  <button type="button" class="preset-pill-btn" data-lat="20.5937" data-lng="78.9629" data-crop="Cotton" data-season="Kharif" title="Deccan Plateau, India">
+                    Deccan Plateau
+                  </button>
+                  <button type="button" class="preset-pill-btn" data-lat="30.9010" data-lng="75.8573" data-crop="Wheat" data-season="Rabi" title="Punjab Plain, India">
+                    Punjab Plain
+                  </button>
+                  <button type="button" class="preset-pill-btn" data-lat="25.3176" data-lng="82.9739" data-crop="Rice" data-season="Kharif" title="Gangetic Basin, India">
+                    Gangetic Basin
+                  </button>
+                  <button type="button" class="preset-pill-btn" data-lat="22.5645" data-lng="72.9289" data-crop="Cotton" data-season="Kharif" title="Gujarat Coast, India">
+                    Gujarat Coast
                   </button>
                 </div>
               </div>
@@ -565,96 +584,185 @@
       </div>
     </section>
 
-    <!-- SECTION 4: Live Telemetry Matrix -->
+    <!-- SECTION 4: Multi-Source Earth Observation Harmonization Matrix (Common 250 m Grid) -->
     <section id="nasa-telemetry" class="section-telemetry">
       <div class="container">
-        <span class="eyebrow">Remote Sensing Engine</span>
-        <h2 class="section-title">Localized NASA Earth Observation Matrix</h2>
-        <p class="section-lead">Live telemetry streams dynamically localized for coordinates <span id="telemetry-coord-display" class="mono font-bold">20.5937° N, 78.9629° E</span>.</p>
+        <div class="telemetry-header-row">
+          <div>
+            <span class="eyebrow">Harmonized 250 m Earth Observation Pipeline</span>
+            <h2 class="section-title">Multi-Source Earth Observation &amp; Ground Truth Matrix</h2>
+            <p class="section-lead">Integrated 12-source agro-ecological pipeline resampled to a common 250 m grid and ground-validated against DWD Climate Data Center records. Localized for <span id="telemetry-coord-display" class="mono font-bold">51.7606° N, 14.3329° E</span>.</p>
+          </div>
+          <div class="telemetry-header-actions">
+            <div class="telemetry-nav-controls" role="group" aria-label="Horizontal scroll controls">
+              <button type="button" id="btn-scroll-telemetry-left" class="telemetry-nav-btn" aria-label="Scroll left" title="Scroll left">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </button>
+              <span class="telemetry-scroll-counter" id="telemetry-scroll-indicator">12 Streams ⇄</span>
+              <button type="button" id="btn-scroll-telemetry-right" class="telemetry-nav-btn" aria-label="Scroll right" title="Scroll right">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+            </div>
+            <button type="button" id="btn-view-pipeline-table" class="btn-secondary" title="View Common 250 m Grid Specifications">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="3" y1="9" x2="21" y2="9"></line>
+                <line x1="3" y1="15" x2="21" y2="15"></line>
+                <line x1="9" y1="3" x2="9" y2="21"></line>
+                <line x1="15" y1="3" x2="15" y2="21"></line>
+              </svg>
+              Common 250 m Grid Specs
+            </button>
+          </div>
+        </div>
+
+        <!-- DWD Ground Calibration Banner -->
+        <div id="dwd-ground-check-banner" class="dwd-ground-banner">
+          <div class="dwd-badge">
+            <span class="pulse-indicator"></span>
+            <strong>DWD Ground Check Active</strong>
+          </div>
+          <div class="dwd-banner-content">
+            <span id="dwd-status-text">Cottbus Reference Station (ID 00880, CC BY 4.0): Validated against NASA POWER daily series (Pearson r = 0.96, T2M bias = +0.3°C, 98% precipitation concordance).</span>
+          </div>
+          <div class="dwd-banner-tag">CC BY 4.0 DWD CDC</div>
+        </div>
 
         <div class="telemetry-grid">
-          <!-- Sensor 1: GWETTOP -->
-          <div class="telemetry-tile">
-            <span class="telemetry-param-name">NASA POWER GWETTOP</span>
-            <div class="telemetry-value" id="matrix-gwettop">0.34</div>
-            <p class="telemetry-desc">Top 5cm Surface Soil Wetness (0 to 1). Triggers C4 rotation switch when &lt; 0.40.</p>
+          <!-- 1. NASA POWER -->
+          <div class="telemetry-tile" data-source="nasa-power">
+            <div class="tile-top-bar">
+              <span class="telemetry-param-name">NASA POWER</span>
+              <span class="res-badge">~50 km • Daily (1981–2026)</span>
+            </div>
+            <div class="telemetry-value" id="matrix-nasa-power-et">4.2 mm/d</div>
+            <div class="telemetry-submetric" id="matrix-power-sub">FAO-56 ET₀ • Deficit: -1.8 mm/d</div>
+            <p class="telemetry-desc">Frost, heat, FAO-56 reference ET, water balance, dry spells, heavy rain, trends.</p>
           </div>
 
-          <!-- Sensor 2: GWETROOT -->
-          <div class="telemetry-tile">
-            <span class="telemetry-param-name">NASA POWER GWETROOT</span>
-            <div class="telemetry-value" id="matrix-gwetroot">0.42</div>
-            <p class="telemetry-desc">Root Zone Soil Wetness (0 to 1). Critical reservoir for crop flowering &amp; yield.</p>
+          <!-- 2. NASA SMAP L4 -->
+          <div class="telemetry-tile" data-source="smap-l4">
+            <div class="tile-top-bar">
+              <span class="telemetry-param-name">NASA SMAP L4</span>
+              <span class="res-badge">9 km • 3-Hourly</span>
+            </div>
+            <div class="telemetry-value" id="matrix-smap-root">0.38</div>
+            <div class="telemetry-submetric" id="matrix-smap-sub">Root-Zone Moisture (Trend: -12%)</div>
+            <p class="telemetry-desc">Model input, soil-moisture map and trend. Critical root-zone water buffer.</p>
           </div>
 
-          <!-- Sensor 3: T2M_MAX -->
-          <div class="telemetry-tile">
-            <span class="telemetry-param-name">NASA POWER T2M_MAX</span>
-            <div class="telemetry-value" id="matrix-t2m-max">34.2 °C</div>
-            <p class="telemetry-desc">Daily Maximum 2-meter Air Temperature. Spots spikes above 35°C.</p>
+          <!-- 3. NASA GPM IMERG -->
+          <div class="telemetry-tile" data-source="gpm-imerg">
+            <div class="tile-top-bar">
+              <span class="telemetry-param-name">NASA GPM IMERG</span>
+              <span class="res-badge">~11 km • Monthly</span>
+            </div>
+            <div class="telemetry-value" id="matrix-gpm-rain">184 mm</div>
+            <div class="telemetry-submetric" id="matrix-gpm-sub">Summer Rain (Anomaly: -28 mm)</div>
+            <p class="telemetry-desc">Model input, summer-rain map. Microwave and infrared merged precipitation.</p>
           </div>
 
-          <!-- Sensor 4: Precipitation -->
-          <div class="telemetry-tile">
-            <span class="telemetry-param-name">NASA POWER PRECTOTCORR</span>
-            <div class="telemetry-value" id="matrix-prectot">420 mm</div>
-            <p class="telemetry-desc">Precipitation Corrected (90-day sum). Satellite microwave &amp; gauge merged.</p>
+          <!-- 4. NASA MODIS Target -->
+          <div class="telemetry-tile telemetry-tile-target" data-source="modis-target">
+            <div class="tile-top-bar">
+              <span class="telemetry-param-name">NASA MODIS</span>
+              <span class="res-badge res-badge-target">Common 250 m Grid • Target</span>
+            </div>
+            <div class="telemetry-value" id="matrix-modis-ndvi">0.64 NDVI</div>
+            <div class="telemetry-submetric" id="matrix-modis-sub">ET/PET: 0.71 • LST: 28.4 °C</div>
+            <p class="telemetry-desc">Model target (crop greenness MOD13Q1), evaporative demand MOD16A2GF, LST MOD11A2.</p>
           </div>
 
-          <!-- Sensor 5: Farm Elevation (Index 2 of geometry.coordinates) -->
-          <div class="telemetry-tile telemetry-tile-elevation">
-            <span class="telemetry-param-name">NASA Terrain Check</span>
-            <div class="telemetry-value" id="matrix-elevation">274 m</div>
-            <p class="telemetry-desc">Farm Elevation (Index 2 in geometry coordinates). Terrain topographic height.</p>
+          <!-- 5. NASA ECOSTRESS -->
+          <div class="telemetry-tile" data-source="ecostress">
+            <div class="tile-top-bar">
+              <span class="telemetry-param-name">NASA ECOSTRESS</span>
+              <span class="res-badge">70 m • AppEEARS</span>
+            </div>
+            <div class="telemetry-value" id="matrix-ecostress-esi">0.42 ESI</div>
+            <div class="telemetry-submetric" id="matrix-ecostress-sub">Moderate Summer Stress</div>
+            <p class="telemetry-desc">Field-level summer water stress (optional). High-resolution canopy temperature.</p>
           </div>
 
-          <!-- Sensor 6: Response Quality & Missing Sentinel Check -->
-          <div class="telemetry-tile telemetry-tile-quality">
-            <span class="telemetry-param-name">Quality: Fill Value -999</span>
-            <div class="telemetry-value" id="matrix-data-quality">90 / 90 Days</div>
-            <p class="telemetry-desc" id="matrix-quality-desc">Warning flag active: automatically filters out any fill value of -999.</p>
+          <!-- 6. NASA GRACE / GRACE-FO -->
+          <div class="telemetry-tile" data-source="grace">
+            <div class="tile-top-bar">
+              <span class="telemetry-param-name">NASA GRACE / GRACE-FO</span>
+              <span class="res-badge">JPL Mascons • ~50 km</span>
+            </div>
+            <div class="telemetry-value" id="matrix-grace-trend">-14.2 mm/yr</div>
+            <div class="telemetry-submetric" id="matrix-grace-sub">Regional Aquifer Storage Trend</div>
+            <p class="telemetry-desc">Regional water-storage trend. Multi-year terrestrial groundwater anomalies.</p>
           </div>
 
-          <!-- Sensor 7: T2M_MIN (Night Recovery) -->
-          <div class="telemetry-tile">
-            <span class="telemetry-param-name">NASA POWER T2M_MIN</span>
-            <div class="telemetry-value" id="matrix-t2m-min">22.4 °C</div>
-            <p class="telemetry-desc">Daily Minimum Night Temperature. Shows if nights stay above 25°C (no crop recovery).</p>
+          <!-- 7. NASA GLDAS Noah 2.1 -->
+          <div class="telemetry-tile" data-source="gldas">
+            <div class="tile-top-bar">
+              <span class="telemetry-param-name">NASA GLDAS Noah 2.1</span>
+              <span class="res-badge">25 km • 3-Hourly Temp</span>
+            </div>
+            <div class="telemetry-value" id="matrix-gldas-extremes">18 Hot / 2 Frost</div>
+            <div class="telemetry-submetric" id="matrix-gldas-sub">1,420 GDD (Growing Degree Days)</div>
+            <p class="telemetry-desc">Hot days, late frost, degree days. Diurnal temperature cycle modeling.</p>
           </div>
 
-          <!-- Sensor 8: TS (Earth Skin Temperature) -->
-          <div class="telemetry-tile">
-            <span class="telemetry-param-name">NASA POWER TS</span>
-            <div class="telemetry-value" id="matrix-ts">44.8 °C</div>
-            <p class="telemetry-desc">Earth Skin Surface Temperature. Shows how hot soil surface truly gets.</p>
+          <!-- 8. NASA SRTM -->
+          <div class="telemetry-tile" data-source="srtm">
+            <div class="tile-top-bar">
+              <span class="telemetry-param-name">NASA SRTM</span>
+              <span class="res-badge">30 m • Topography</span>
+            </div>
+            <div class="telemetry-value" id="matrix-srtm-slope">2.4% Slope</div>
+            <div class="telemetry-submetric" id="matrix-srtm-sub">Elev: 274 m • TPI: Flat Valley</div>
+            <p class="telemetry-desc">Slope, terrain position. High-resolution terrain runoff &amp; wetness index.</p>
           </div>
 
-          <!-- Sensor 9: Solar Radiation Flux -->
-          <div class="telemetry-tile">
-            <span class="telemetry-param-name">ALLSKY_SFC_SW_DWN</span>
-            <div class="telemetry-value" id="matrix-solar">19.8 MJ/m²</div>
-            <p class="telemetry-desc">Solar Radiation Intensity at earth surface. High flux accelerates transpiration.</p>
+          <!-- 9. ESA Sentinel-2 L2A -->
+          <div class="telemetry-tile" data-source="sentinel2">
+            <div class="tile-top-bar">
+              <span class="telemetry-param-name">ESA Sentinel-2 L2A</span>
+              <span class="res-badge">10 m • 5-Day Optical</span>
+            </div>
+            <div class="telemetry-value" id="matrix-s2-bare-soil">3.5 Months</div>
+            <div class="telemetry-submetric" id="matrix-s2-sub">Bare-Soil Months / Field</div>
+            <p class="telemetry-desc">Bare-soil months per field. Tracking fallow exposure, residue, and erosion windows.</p>
           </div>
 
-          <!-- Sensor 10: ECOSTRESS LST & Evapotranspiration -->
-          <div class="telemetry-tile">
-            <span class="telemetry-param-name">ECOSTRESS (ISS)</span>
-            <div class="telemetry-value" id="matrix-ecostress">High-Detail</div>
-            <p class="telemetry-desc">Field-scale LST hotspots &amp; Evapotranspiration plant sweating / stomatal shutdown.</p>
+          <!-- 10. JRC EUCROPMAP -->
+          <div class="telemetry-tile" data-source="eucropmap">
+            <div class="tile-top-bar">
+              <span class="telemetry-param-name">JRC EUCROPMAP</span>
+              <span class="res-badge">2018, 2022 • 10 m</span>
+            </div>
+            <div class="telemetry-value" id="matrix-eucrop-rotation">Wheat → RS → Maize</div>
+            <div class="telemetry-submetric" id="matrix-eucrop-sub">Crop Rotation Sequence Labels</div>
+            <p class="telemetry-desc">Training labels, current rotation. Pan-European multi-year crop mapping.</p>
           </div>
 
-          <!-- Sensor 11: Heat Indicator: Days > 35°C -->
-          <div class="telemetry-tile">
-            <span class="telemetry-param-name">Heat Days (>35°C)</span>
-            <div class="telemetry-value" id="matrix-heat-wave-days">22 Days</div>
-            <p class="telemetry-desc">Cumulative days T2M_MAX &gt; 35°C in last 90 days. Key thermal threshold.</p>
+          <!-- 11. ISRIC SoilGrids 2.0 -->
+          <div class="telemetry-tile" data-source="soilgrids">
+            <div class="tile-top-bar">
+              <span class="telemetry-param-name">ISRIC SoilGrids 2.0</span>
+              <span class="res-badge">250 m Native Grid</span>
+            </div>
+            <div class="telemetry-value" id="matrix-soilgrids-tex">58% Sand / 18% Clay</div>
+            <div class="telemetry-submetric" id="matrix-soilgrids-sub">SOC: 14.2 g/kg • pH: 5.8 • AWC: 112 mm</div>
+            <p class="telemetry-desc">Sand, clay, organic carbon, pH, density, available water capacity.</p>
           </div>
 
-          <!-- Sensor 12: Heat Indicator: Soil Heat Days (>40°C) -->
-          <div class="telemetry-tile">
-            <span class="telemetry-param-name">Soil Heat Days (>40°C)</span>
-            <div class="telemetry-value" id="matrix-hot-soil-days">14 Days</div>
-            <p class="telemetry-desc">Cumulative days Earth Skin TS &gt; 40°C. Bakes topsoil &amp; halts beneficial microbes.</p>
+          <!-- 12. DWD Climate Data Center -->
+          <div class="telemetry-tile telemetry-tile-dwd" data-source="dwd-cdc">
+            <div class="tile-top-bar">
+              <span class="telemetry-param-name">DWD Climate Data Center</span>
+              <span class="res-badge res-badge-dwd">Cottbus Station • CC BY 4.0</span>
+            </div>
+            <div class="telemetry-value" id="matrix-dwd-check">98.2% Match</div>
+            <div class="telemetry-submetric" id="matrix-dwd-sub">Bias: +0.3°C • r = 0.96</div>
+            <p class="telemetry-desc">Ground check of NASA POWER. Ground truth station validation &amp; bias correction.</p>
           </div>
         </div>
       </div>
