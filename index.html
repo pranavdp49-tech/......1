@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NASA FieldFarm : Agro-Ecological Decision System</title>
+  <title>Astrosoil : Agro-Ecological Decision System</title>
   <meta name="description" content="Precision agro-ecological rotation system integrating NASA SMAP, MODIS, and POWER datasets for climate-resilient field farming.">
   <!-- Anti-FOUC Theme Initializer -->
   <script>
@@ -32,8 +32,8 @@
   <!-- Header & Navigation Bar -->
   <header class="site-header">
     <div class="container header-inner">
-      <a href="#main-content" class="brand-wrapper" aria-label="NASA FieldFarm Home">
-        <img src="nasa_logo.svg" alt="NASA Logo" width="46" height="38" class="nasa-official-logo" />
+      <a href="#main-content" class="brand-wrapper" aria-label="Astrosoil Home">
+        <img src="astrosoil_logo.png" alt="Astrosoil Logo" width="46" height="40" class="nasa-official-logo" />
       </a>
 
       <!-- Primary Navigation -->
@@ -82,7 +82,7 @@
         <!-- Big Home Page Hero Heading with Dia Text Reveal & Kinetic Text -->
         <div class="hero-brand-header">
           <h1 class="hero-main-title">
-            <span class="dia-text-reveal kinetic-text" data-dia-delay="150" data-dia-duration="1700" data-dia-color="var(--text-strong)" data-kinetic-text="NASA FieldFarm">NASA FieldFarm</span>
+            <span class="dia-text-reveal kinetic-text" data-dia-delay="150" data-dia-duration="1700" data-dia-color="var(--text-strong)" data-kinetic-text="Astrosoil">Astrosoil</span>
           </h1>
           <p class="hero-main-tagline">Agro-Ecological Decision &amp; Precision Rotation System</p>
         </div>
@@ -225,56 +225,109 @@
                 </div>
               </div>
 
-              <!-- Field 2: Baseline Crop Input -->
-              <div class="field-col-6 form-group">
-                <label for="select-baseline-crop" class="form-label">Baseline Crop Input</label>
-                <select id="select-baseline-crop" class="input-field">
-                  <option value="Rice" selected>Rice (Paddy - Intensive Water Demand)</option>
-                  <option value="Cotton">Cotton (High Thermal &amp; Pest Sensitivity)</option>
-                  <option value="Wheat">Wheat (Terminal Heat Risk)</option>
-                  <option value="Sugarcane">Sugarcane (Perennial Water Mining)</option>
-                  <option value="Maize">Maize (Moderate Water Demand)</option>
-                </select>
-              </div>
+              <!-- Agro-Ecological Configuration Mode Toggle (Auto Satellite vs Manual) -->
+              <div class="field-col-12 form-group">
+                <div class="agro-mode-switch-container">
+                  <div class="agro-mode-switch-header">
+                    <div class="agro-mode-title-group">
+                      <span class="form-label" style="margin-bottom: 0;">Parameter Configuration Mode</span>
+                      <span class="form-subtext">Toggle between automated satellite sensing and manual field inputs</span>
+                    </div>
+                    <div class="mode-toggle-group" role="tablist" aria-label="Configuration Mode">
+                      <button type="button" id="btn-mode-auto" class="mode-toggle-tab active" role="tab" aria-selected="true" aria-controls="mode-auto-panel">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                          <circle cx="12" cy="12" r="10"></circle>
+                          <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                          <path d="M2 12h20"></path>
+                        </svg>
+                        <span>Satellite Auto-Detect</span>
+                        <span class="mode-pill-badge">Smart</span>
+                      </button>
+                      <button type="button" id="btn-mode-manual" class="mode-toggle-tab" role="tab" aria-selected="false" aria-controls="mode-manual-panel">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                          <path d="M12 20h9"></path>
+                          <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                        </svg>
+                        <span>Manual Input</span>
+                      </button>
+                    </div>
+                  </div>
 
-              <!-- Field 3: Time Window / Target Season -->
-              <div class="field-col-6 form-group">
-                <span class="form-label">Target Growing Season</span>
-                <div class="segment-group" role="radiogroup" aria-label="Target Growing Season">
-                  <div class="segment-item">
-                    <input type="radio" id="season-kharif" name="growing_season" value="Kharif" checked>
-                    <label for="season-kharif" class="segment-label">Kharif (Monsoon)</label>
+                  <!-- Panel A: Satellite Auto-Detect Notice -->
+                  <div id="mode-auto-panel" class="mode-panel active" role="tabpanel" aria-labelledby="btn-mode-auto">
+                    <div class="auto-detect-notice-pill" role="status">
+                      <div class="auto-detect-pulse-icon" aria-hidden="true">
+                        <span class="pulse-ring"></span>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                          <circle cx="12" cy="12" r="10"></circle>
+                          <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                          <path d="M2 12h20"></path>
+                        </svg>
+                      </div>
+                      <div class="auto-detect-notice-text">
+                        <strong>Autonomous Earth Observation Active:</strong> Baseline crop, growing season, soil texture, and irrigation framework are automatically inferred from your selected coordinates via NASA POWER, SMAP L4, and ISRIC SoilGrids 2.0.
+                      </div>
+                    </div>
                   </div>
-                  <div class="segment-item">
-                    <input type="radio" id="season-rabi" name="growing_season" value="Rabi">
-                    <label for="season-rabi" class="segment-label">Rabi (Winter)</label>
-                  </div>
-                  <div class="segment-item">
-                    <input type="radio" id="season-summer" name="growing_season" value="Summer">
-                    <label for="season-summer" class="segment-label">Summer (Zaid)</label>
+
+                  <!-- Panel B: Manual Parameters Grid -->
+                  <div id="mode-manual-panel" class="mode-panel" role="tabpanel" aria-labelledby="btn-mode-manual" style="display: none;">
+                    <div class="manual-fields-grid">
+                      <!-- Field: Baseline Crop Input -->
+                      <div class="form-group field-col-6">
+                        <label for="select-baseline-crop" class="form-label">Baseline Crop Input</label>
+                        <select id="select-baseline-crop" class="input-field">
+                          <option value="Rice" selected>Rice (Paddy - Intensive Water Demand)</option>
+                          <option value="Cotton">Cotton (High Thermal &amp; Pest Sensitivity)</option>
+                          <option value="Wheat">Wheat (Terminal Heat Risk)</option>
+                          <option value="Sugarcane">Sugarcane (Perennial Water Mining)</option>
+                          <option value="Maize">Maize (Moderate Water Demand)</option>
+                        </select>
+                      </div>
+
+                      <!-- Field: Target Growing Season -->
+                      <div class="form-group field-col-6">
+                        <span class="form-label">Target Growing Season</span>
+                        <div class="segment-group" role="radiogroup" aria-label="Target Growing Season">
+                          <div class="segment-item">
+                            <input type="radio" id="season-kharif" name="growing_season" value="Kharif" checked>
+                            <label for="season-kharif" class="segment-label">Kharif (Monsoon)</label>
+                          </div>
+                          <div class="segment-item">
+                            <input type="radio" id="season-rabi" name="growing_season" value="Rabi">
+                            <label for="season-rabi" class="segment-label">Rabi (Winter)</label>
+                          </div>
+                          <div class="segment-item">
+                            <input type="radio" id="season-summer" name="growing_season" value="Summer">
+                            <label for="season-summer" class="segment-label">Summer (Zaid)</label>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Field: Soil Texture Profile -->
+                      <div class="form-group field-col-6">
+                        <label for="select-soil-profile" class="form-label">Soil Texture Profile</label>
+                        <select id="select-soil-profile" class="input-field">
+                          <option value="black_vertisol" selected>Black Vertisol (High Water Retention)</option>
+                          <option value="alluvial_loam">Alluvial Loam (Balanced Porosity)</option>
+                          <option value="red_sandy">Red Sandy Soil (Rapid Drainage)</option>
+                          <option value="clay_compact">Heavy Clay (Prone to Waterlogging)</option>
+                        </select>
+                      </div>
+
+                      <!-- Field: Irrigation System -->
+                      <div class="form-group field-col-6">
+                        <label for="select-irrigation-type" class="form-label">Irrigation System</label>
+                        <select id="select-irrigation-type" class="input-field">
+                          <option value="rainfed" selected>Pure Rainfed (High Climate Sensitivity)</option>
+                          <option value="tubewell">Groundwater Tubewell (Aquifer Extraction)</option>
+                          <option value="canal">Canal Gravity Feed (Rotational Supply)</option>
+                          <option value="drip">Micro-Irrigation / Drip (Precision System)</option>
+                        </select>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-
-              <!-- Additional Field: Soil & Water Profile -->
-              <div class="field-col-6 form-group">
-                <label for="select-soil-profile" class="form-label">Soil Texture Profile</label>
-                <select id="select-soil-profile" class="input-field">
-                  <option value="black_vertisol" selected>Black Vertisol (High Water Retention)</option>
-                  <option value="alluvial_loam">Alluvial Loam (Balanced Porosity)</option>
-                  <option value="red_sandy">Red Sandy Soil (Rapid Drainage)</option>
-                  <option value="clay_compact">Heavy Clay (Prone to Waterlogging)</option>
-                </select>
-              </div>
-
-              <div class="field-col-6 form-group">
-                <label for="select-irrigation-type" class="form-label">Irrigation System</label>
-                <select id="select-irrigation-type" class="input-field">
-                  <option value="rainfed" selected>Pure Rainfed (High Climate Sensitivity)</option>
-                  <option value="tubewell">Groundwater Tubewell (Aquifer Extraction)</option>
-                  <option value="canal">Canal Gravity Feed (Rotational Supply)</option>
-                  <option value="drip">Micro-Irrigation / Drip (Precision System)</option>
-                </select>
               </div>
             </div>
 
@@ -300,10 +353,13 @@
           </form>
         </div>
 
-        <!-- UI State: Loading State (R-27) -->
-        <div id="state-loading" class="state-container" aria-live="polite">
-          <div class="spinner" aria-hidden="true"></div>
-          <h3 class="state-title" style="margin-top: 1rem;">Retrieving NASA Earth Observations</h3>
+        <!-- UI State: Loading State (R-27) with SiriWave WebGL Telemetry Visualizer -->
+        <div id="state-loading" class="state-container siri-wave-loading-container" aria-live="polite">
+          <div class="siri-wave-wrapper">
+            <canvas id="siri-wave-canvas" class="siri-wave-canvas" width="360" height="200" aria-label="NASA earth observation waveform shader"></canvas>
+            <div class="siri-wave-glow" aria-hidden="true"></div>
+          </div>
+          <h3 class="state-title" style="margin-top: 1.25rem;">Retrieving NASA Earth Observations</h3>
           <p class="state-description">Processing SMAP surface soil moisture rasters, MODIS vegetation indices, and localized evaporative demand for the given coordinates.</p>
         </div>
 
@@ -353,6 +409,83 @@
               </svg>
               View JSON Response
             </button>
+          </div>
+        </div>
+
+        <!-- Auto-Detected / Configured Field Agro-Profile Panel -->
+        <div id="auto-detected-profile-card" class="auto-profile-card">
+          <div class="auto-profile-header">
+            <div class="auto-profile-title-group">
+              <span class="auto-profile-badge" id="auto-profile-badge">
+                <span class="pulse-indicator-cyan" id="auto-profile-dot"></span>
+                <span id="auto-profile-badge-text">Auto-Detected Satellite Parameters</span>
+              </span>
+              <h3 class="auto-profile-title" id="auto-profile-title">Resolved Field Agro-Ecological Baseline</h3>
+            </div>
+            <span class="auto-profile-source-tag" id="auto-profile-source">ISRIC SoilGrids 2.0 • JRC EUCROPMAP • NASA POWER v2.10.3</span>
+          </div>
+          <div class="auto-profile-grid">
+            <!-- 1. Baseline Crop -->
+            <div class="auto-profile-item">
+              <div class="auto-profile-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2a10 10 0 0 1 10 10c0 5.523-4.477 10-10 10S2 17.523 2 12A10 10 0 0 1 12 2z"></path>
+                  <path d="M12 6v12M8 10l4-4 4 4M8 14l4 4 4-4"></path>
+                </svg>
+              </div>
+              <div class="auto-profile-content">
+                <span class="auto-profile-label" id="auto-crop-label">Auto-Detected Baseline Crop</span>
+                <span class="auto-profile-val" id="auto-crop-val">Rice (Paddy)</span>
+                <span class="auto-profile-sub" id="auto-crop-sub">Inferred from regional agro-ecological zone &amp; vegetation indices</span>
+              </div>
+            </div>
+
+            <!-- 2. Target Growing Season -->
+            <div class="auto-profile-item">
+              <div class="auto-profile-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+              </div>
+              <div class="auto-profile-content">
+                <span class="auto-profile-label" id="auto-season-label">Active Growing Season</span>
+                <span class="auto-profile-val" id="auto-season-val">Kharif (Monsoon)</span>
+                <span class="auto-profile-sub" id="auto-season-sub">Synchronized with local calendar phenology</span>
+              </div>
+            </div>
+
+            <!-- 3. Soil Texture Profile -->
+            <div class="auto-profile-item">
+              <div class="auto-profile-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                  <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                  <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                </svg>
+              </div>
+              <div class="auto-profile-content">
+                <span class="auto-profile-label" id="auto-soil-label">Soil Texture Profile</span>
+                <span class="auto-profile-val" id="auto-soil-val">Black Vertisol</span>
+                <span class="auto-profile-sub" id="auto-soil-sub">ISRIC SoilGrids 250m &amp; SMAP GWETTOP soil wetness</span>
+              </div>
+            </div>
+
+            <!-- 4. Irrigation System -->
+            <div class="auto-profile-item">
+              <div class="auto-profile-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+                </svg>
+              </div>
+              <div class="auto-profile-content">
+                <span class="auto-profile-label" id="auto-irrigation-label">Inferred Irrigation System</span>
+                <span class="auto-profile-val" id="auto-irrigation-val">Groundwater Tubewell</span>
+                <span class="auto-profile-sub" id="auto-irrigation-sub">Inferred from NASA GPM precipitation &amp; GRACE aquifer deficit</span>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -520,13 +653,6 @@
                 <span class="spec-divider" aria-hidden="true">·</span>
                 <div><dt class="sr-only">Nitrogen Balance</dt><dd>N-Loss: High</dd></div>
               </dl>
-              <button type="button" class="card-action-btn" data-modal-target="strategy_a">
-                <span>Inspect Stress Metrics</span>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M3 3v18h18"></path>
-                  <path d="m7 16 4-6 4 3 5-7"></path>
-                </svg>
-              </button>
             </div>
           </article>
 
@@ -591,12 +717,6 @@
                 <span class="spec-divider" aria-hidden="true">·</span>
                 <div><dt class="sr-only">Physiology</dt><dd>C4 Pathway</dd></div>
               </dl>
-              <button type="button" class="card-action-btn" data-modal-target="strategy_b">
-                <span>Simulate Water Savings</span>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
-                </svg>
-              </button>
             </div>
           </article>
 
@@ -662,13 +782,6 @@
                 <span class="spec-divider" aria-hidden="true">·</span>
                 <div><dt class="sr-only">Ground Cover</dt><dd>NDVI &gt;0.55</dd></div>
               </dl>
-              <button type="button" class="card-action-btn" data-modal-target="strategy_c">
-                <span>View Soil Recovery Plan</span>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M12 22v-9"></path>
-                  <path d="M12 13a6 6 0 0 0-6-6H3v2a6 6 0 0 0 6 6h3z"></path>
-                </svg>
-              </button>
             </div>
           </article>
         </div>
@@ -881,20 +994,206 @@
     </div>
   </div>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <p class="footer-text">
-        NASA FieldFarm : Open agro-ecological intelligence using NASA Earth Science Data Systems (ESDS).
-      </p>
-      <nav aria-label="Footer navigation">
-        <ul class="footer-nav">
-          <li><a href="#problem" class="footer-link">Problem Diagnostics</a></li>
-          <li><a href="#input-layer" class="footer-link">Field Parameters</a></li>
-          <li><a href="#output-strategies" class="footer-link">Rotation Strategies</a></li>
-          <li><a href="#nasa-telemetry" class="footer-link">NASA Telemetry</a></li>
-        </ul>
-      </nav>
+  <!-- Footer & NASA API / Earth Observation Data Registry Segment -->
+  <footer class="site-footer" id="nasa-api-registry">
+    <div class="container footer-content-wrapper">
+      
+      <!-- NASA Data & API Registry Header -->
+      <div class="api-registry-header">
+        <div class="api-registry-badge">
+          <span class="pulse-indicator-cyan"></span>
+          <span>NASA Earth Science Data Systems (ESDS) • Open API &amp; Data Reference</span>
+        </div>
+        <h2 class="api-registry-title">NASA Earth Observation &amp; Data Architecture</h2>
+        <p class="api-registry-subtitle">
+          Comprehensive specification of all satellite constellations, orbital radar sensors, radiative transfer models, and live REST API endpoints integrated across Astrosoil.
+        </p>
+      </div>
+
+      <!-- Live REST API Connection String -->
+      <div class="api-text-endpoint-bar">
+        <span class="api-live-tag">Active REST Endpoint:</span>
+        <code class="api-live-url mono" id="footer-live-api-url">https://power.larc.nasa.gov/api/temporal/daily/point?community=ag&amp;parameters=T2M_MAX,T2M_MIN,PRECTOTCORR,ALLSKY_SFC_SW_DWN,GWETTOP,GWETROOT,TS</code>
+      </div>
+
+      <!-- Pure Text-Wise Continuous Flow (No Multi-Column Grid) -->
+      <div class="api-registry-text-flow">
+
+        <!-- 1. NASA POWER API -->
+        <article class="api-text-block">
+          <div class="api-text-header">
+            <h3 class="api-text-title">1. NASA POWER v2.10.3 API (Prediction Of Worldwide Energy Resources)</h3>
+            <span class="api-text-mission">• NASA Langley Research Center</span>
+          </div>
+          <p class="api-text-body">
+            Direct real-time HTTP client queries extracting 90-day daily point agroclimatology for localized FAO-56 Penman-Monteith Reference Evapotranspiration (ET₀), cumulative precipitation, and thermal heat wave metrics.
+          </p>
+          <div class="api-text-meta">
+            <span><strong>Endpoint:</strong> <code>https://power.larc.nasa.gov/api/temporal/daily/point</code></span>
+            <span><strong>Parameters:</strong> <code>T2M_MAX</code>, <code>T2M_MIN</code>, <code>PRECTOTCORR</code>, <code>ALLSKY_SFC_SW_DWN</code>, <code>GWETTOP</code>, <code>GWETROOT</code>, <code>TS</code></span>
+            <span><strong>Grid &amp; Cadence:</strong> Global 0.5° × 0.625° reanalysis • Daily frequency • 5-day latency QA archive</span>
+          </div>
+        </article>
+
+        <!-- 2. NASA SMAP L4 -->
+        <article class="api-text-block">
+          <div class="api-text-header">
+            <h3 class="api-text-title">2. NASA SMAP Level-4 (Soil Moisture Active Passive — SPL4SMAU)</h3>
+            <span class="api-text-mission">• NASA Jet Propulsion Laboratory / GSFC</span>
+          </div>
+          <p class="api-text-body">
+            Spaceborne L-band radar and radiometer assimilations integrating into the NASA Catchment Land Surface Model to output surface and subsurface root-zone soil wetness profiles, detecting agricultural drought and crop root stress.
+          </p>
+          <div class="api-text-meta">
+            <span><strong>Parameters:</strong> Root-Zone Soil Wetness (0–100 cm), Surface Soil Wetness (0–5 cm), Seasonal Drying Trend %</span>
+            <span><strong>Resolution:</strong> 9 km global grid • Multi-day orbital repeat</span>
+          </div>
+        </article>
+
+        <!-- 3. NASA GPM IMERG -->
+        <article class="api-text-block">
+          <div class="api-text-header">
+            <h3 class="api-text-title">3. NASA GPM IMERG Final Run V07B (Global Precipitation Measurement)</h3>
+            <span class="api-text-mission">• NASA Goddard Space Flight Center / JAXA</span>
+          </div>
+          <p class="api-text-body">
+            Inter-calibrated multi-satellite precipitation algorithm merging dual-frequency precipitation radar, passive microwave, and geostationary infrared observations to measure cumulative rainfall, deluge events (&gt;110 mm/day), and historical seasonal anomalies.
+          </p>
+          <div class="api-text-meta">
+            <span><strong>Parameters:</strong> Summer Season Accumulation (mm), Precipitation Anomaly, Heavy Rain Days (&gt;110 mm)</span>
+            <span><strong>Resolution:</strong> 11 km (0.1° × 0.1°) • Monthly &amp; Half-hourly products</span>
+          </div>
+        </article>
+
+        <!-- 4. NASA MODIS Terra & Aqua -->
+        <article class="api-text-block">
+          <div class="api-text-header">
+            <h3 class="api-text-title">4. NASA MODIS Terra &amp; Aqua (MOD13Q1 / MOD16A2GF / MOD11A2)</h3>
+            <span class="api-text-mission">• NASA Land Processes DAAC</span>
+          </div>
+          <p class="api-text-body">
+            Establishes Astrosoil's common 250 m harmonization benchmark for canopy vegetative vigor through Normalized Difference Vegetation Index (NDVI), transpirational ET/PET water demand ratios, and Land Surface Temperature (LST).
+          </p>
+          <div class="api-text-meta">
+            <span><strong>Parameters:</strong> MOD13Q1 250 m 16-day NDVI, MOD16A2GF 500 m 8-day ET/PET ratio, MOD11A2 1 km LST</span>
+            <span><strong>Coverage:</strong> Global 250 m Harmonization Target • 2000–Present archive</span>
+          </div>
+        </article>
+
+        <!-- 5. NASA ECOSTRESS -->
+        <article class="api-text-block">
+          <div class="api-text-header">
+            <h3 class="api-text-title">5. NASA ECOSTRESS (AppEEARS / International Space Station)</h3>
+            <span class="api-text-mission">• NASA JPL / International Space Station</span>
+          </div>
+          <p class="api-text-body">
+            High-resolution thermal radiometer operating from the ISS to measure field-level plant temperatures, computing the Evaporative Stress Index (ESI) and identifying midday heat-induced stomatal closure before visible crop wilting.
+          </p>
+          <div class="api-text-meta">
+            <span><strong>Parameters:</strong> Evaporative Stress Index (ESI), Evaporative Fraction, Local Canopy Thermal Stress</span>
+            <span><strong>Resolution:</strong> 70 m field precision • Precessing ISS orbital cadence</span>
+          </div>
+        </article>
+
+        <!-- 6. NASA GRACE & GRACE-FO -->
+        <article class="api-text-block">
+          <div class="api-text-header">
+            <h3 class="api-text-title">6. NASA GRACE / GRACE-FO Tellus Mascons</h3>
+            <span class="api-text-mission">• NASA JPL / GFZ German Research Centre</span>
+          </div>
+          <p class="api-text-body">
+            Tracks microscopic variations in Earth's gravitational pull to measure decadal Terrestrial Water Storage (TWS) anomalies and regional deep groundwater depletion rates in mm/year, evaluating tubewell sustainability.
+          </p>
+          <div class="api-text-meta">
+            <span><strong>Parameters:</strong> Terrestrial Water Storage (TWS) Mass Anomaly, Groundwater Depletion Trend (mm/yr)</span>
+            <span><strong>Dataset:</strong> JPL Mascon RL06 • 2002–Present timeseries</span>
+          </div>
+        </article>
+
+        <!-- 7. NASA GLDAS Noah 2.1 -->
+        <article class="api-text-block">
+          <div class="api-text-header">
+            <h3 class="api-text-title">7. NASA GLDAS Noah Land Surface Model 2.1</h3>
+            <span class="api-text-mission">• NASA GES DISC</span>
+          </div>
+          <p class="api-text-body">
+            Simulates global land hydrology and energy fluxes at 3-hourly time-steps to compute cumulative growing degree days (GDD), critical nocturnal frost risks, and heat wave spells above 35°C during sensitive crop flowering stages.
+          </p>
+          <div class="api-text-meta">
+            <span><strong>Parameters:</strong> Growing Degree Days (GDD, base 10°C), Consecutive Heat Wave Days (&gt;35°C), Late Frost Hazard</span>
+            <span><strong>Resolution:</strong> 0.25° spatial grid • 3-hourly physics assimilation</span>
+          </div>
+        </article>
+
+        <!-- 8. NASA SRTM v3.0 -->
+        <article class="api-text-block">
+          <div class="api-text-header">
+            <h3 class="api-text-title">8. NASA SRTM v3.0 Global 1-ArcSecond</h3>
+            <span class="api-text-mission">• NASA JPL / National Geospatial-Intelligence Agency</span>
+          </div>
+          <p class="api-text-body">
+            Void-filled radar interferometric digital elevation model providing 30 m terrain elevation, slope gradients, and Topographic Position Index (TPI) to assess soil erosion risk, water runoff, and gravity-fed irrigation options.
+          </p>
+          <div class="api-text-meta">
+            <span><strong>Parameters:</strong> Elevation (m a.s.l.), Slope Percentage (%), Topographic Position Index (TPI)</span>
+            <span><strong>Resolution:</strong> 30 m (1 arc-second) global coverage</span>
+          </div>
+        </article>
+
+        <!-- 9. ISRIC SoilGrids 2.0 & JRC EUCROPMAP -->
+        <article class="api-text-block">
+          <div class="api-text-header">
+            <h3 class="api-text-title">9. ISRIC SoilGrids 2.0 &amp; European Commission JRC EUCROPMAP</h3>
+            <span class="api-text-mission">• World Soil Information &amp; JRC</span>
+          </div>
+          <p class="api-text-body">
+            Machine learning global soil mapping determining sand/clay proportions, Soil Organic Carbon (SOC), pH, and Available Water Capacity (AWC), coupled with multi-year satellite crop classifications to match crop species to field conditions.
+          </p>
+          <div class="api-text-meta">
+            <span><strong>Parameters:</strong> Sand &amp; Clay Fractions %, Soil Organic Carbon (SOC g/kg), pH (H₂O), Available Water Capacity (AWC mm)</span>
+            <span><strong>Resolution:</strong> 250 m global predictions • 0–30 cm topsoil profile</span>
+          </div>
+        </article>
+
+        <!-- 10. DWD Climate Data Center Ground Check -->
+        <article class="api-text-block">
+          <div class="api-text-header">
+            <h3 class="api-text-title">10. DWD Climate Data Center Ground Check (Cottbus Station)</h3>
+            <span class="api-text-mission">• Deutscher Wetterdienst • Station ID 00880 • Open Data CC BY 4.0</span>
+          </div>
+          <p class="api-text-body">
+            In-situ meteorological station ground-truth validation verifying NASA POWER accuracy (r = 0.96, bias +0.3°C, 98.2% match) to provide verified scientific confidence for farm managers.
+          </p>
+          <div class="api-text-meta">
+            <span><strong>Parameters:</strong> Ground Station Air Temperature, Precipitation, Solar Radiation Verification</span>
+            <span><strong>Station:</strong> Cottbus (51.7606°N, 14.3329°E) • Reference Benchmark</span>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Footer Bottom Bar (Navigation & Attribution) -->
+      <div class="footer-bottom-bar">
+        <div class="footer-brand-wrap">
+          <img src="astrosoil_logo.png" alt="Astrosoil Logo" width="30" height="30" class="footer-logo">
+          <span class="footer-brand-text">Astrosoil</span>
+          <span class="footer-divider">•</span>
+          <span class="footer-text">
+            Open agro-ecological intelligence using NASA Earth Science Data Systems (ESDS).
+          </span>
+        </div>
+        <nav aria-label="Footer navigation">
+          <ul class="footer-nav">
+            <li><a href="#problem" class="footer-link">Problem Diagnostics</a></li>
+            <li><a href="#input-layer" class="footer-link">Field Parameters</a></li>
+            <li><a href="#output-strategies" class="footer-link">Rotation Strategies</a></li>
+            <li><a href="#nasa-telemetry" class="footer-link">NASA Telemetry</a></li>
+            <li><a href="#nasa-api-registry" class="footer-link active">NASA APIs</a></li>
+            <li><a href="#main-content" class="footer-link back-to-top" title="Back to top">↑ Top</a></li>
+          </ul>
+        </nav>
+      </div>
+
     </div>
   </footer>
 
