@@ -102,6 +102,19 @@
   const valSomGain = document.getElementById('val-som-gain');
   const valNdviCover = document.getElementById('val-ndvi-cover');
 
+  // Farmer Action Intelligence Displays
+  const advisoryFieldSummary = document.getElementById('advisory-field-summary');
+  const advIrrigationTitle = document.getElementById('adv-irrigation-title');
+  const advIrrigationText = document.getElementById('adv-irrigation-text');
+  const advCropTitle = document.getElementById('adv-crop-title');
+  const advCropText = document.getElementById('adv-crop-text');
+  const advWeatherTitle = document.getElementById('adv-weather-title');
+  const advWeatherText = document.getElementById('adv-weather-text');
+  const advFertilizerTitle = document.getElementById('adv-fertilizer-title');
+  const advFertilizerText = document.getElementById('adv-fertilizer-text');
+  const advCoverTitle = document.getElementById('adv-cover-title');
+  const advCoverText = document.getElementById('adv-cover-text');
+
   // Modal dialog elements
   const modalOverlay = document.getElementById('strategy-modal');
   const modalCloseBtn = document.getElementById('modal-close-btn');
@@ -1349,6 +1362,65 @@
     valBnfGain.textContent = '+' + data.strategies.strategy_c.bnf_gain_kg_ha + ' kg N/ha net gain';
     valSomGain.textContent = '+' + data.strategies.strategy_c.som_increase_percent + '% increase per year';
     valNdviCover.textContent = 'MODIS NDVI > ' + data.strategies.strategy_c.ndvi_cover;
+
+    // Update Farmer Action Intelligence Panel (Plain-English Advisory)
+    if (advisoryFieldSummary && data.matrix_12) {
+      const m = data.matrix_12;
+      const crop = data.inputs.crop;
+      const soilProfile = data.inputs.soil.replace(/_/g, ' ');
+      advisoryFieldSummary.textContent = `${crop} • ${soilProfile.toUpperCase()} (AWC: ${m.soilgrids.awc} mm)`;
+
+      // 1. Irrigation & Soil Water
+      if (advIrrigationTitle && advIrrigationText) {
+        const rootMoist = m.smap_l4.root_moisture;
+        const deficit = m.nasa_power.deficit; // mm/day
+        const daysToDepletion = Math.max(2, Math.round((rootMoist * m.soilgrids.awc * 0.4) / Math.abs(deficit || 2)));
+        if (rootMoist < 0.35) {
+          advIrrigationTitle.textContent = `Urgent: Apply 35–40 mm Irrigation in ${daysToDepletion} Days`;
+          advIrrigationText.textContent = `Root-zone wetness is critical (${rootMoist.toFixed(2)}). Daily moisture deficit is ${deficit} mm/day. Irrigate in early morning to prevent topsoil cracking and root-tip baking.`;
+        } else {
+          advIrrigationTitle.textContent = `Adequate Moisture: Schedule Irrigation in ${daysToDepletion}–${daysToDepletion + 4} Days`;
+          advIrrigationText.textContent = `Root-zone wetness is healthy (${rootMoist.toFixed(2)}). Soil retains ${m.soilgrids.awc} mm of available water. Delay pumping to conserve groundwater.`;
+        }
+      }
+
+      // 2. Recommended Crop Choice
+      if (advCropTitle && advCropText) {
+        const c4Crop = data.strategies.strategy_b.recommended_c4_crop;
+        const waterSaved = data.strategies.strategy_b.water_savings_percent;
+        advCropTitle.textContent = `Rotate ~35% of Acreage to ${c4Crop}`;
+        advCropText.textContent = `Rotating from ${crop} to ${c4Crop} reduces seasonal water need from ${data.strategies.strategy_a.et_demand_mm} mm to under 400 mm, saving ~${waterSaved}% irrigation water and securing your harvest against dry spells.`;
+      }
+
+      // 3. Thermal Stress & Weather Alert
+      if (advWeatherTitle && advWeatherText) {
+        const hotDays = m.gldas.hot_days;
+        const peakT = data.telemetry.heat_indicators?.peak_t2m_max || 34.0;
+        if (hotDays > 15 || peakT > 38.0) {
+          advWeatherTitle.textContent = `High Heat Strike Warning (${hotDays} Days >32°C, Peak ${peakT}°C)`;
+          advWeatherText.textContent = `High thermal spike risk during flowering. Avoid midday flood irrigation which boils root tips; apply light evening passes or foliar potassium to shield pollen fertility.`;
+        } else {
+          advWeatherTitle.textContent = `Moderate Thermal Window (${hotDays} Days >32°C)`;
+          advWeatherText.textContent = `Thermal profile is manageable for ${crop}. Keep ground covered to buffer root temperature against sudden midday heat spikes.`;
+        }
+      }
+
+      // 4. Fertilizer & Cost Savings
+      if (advFertilizerTitle && advFertilizerText) {
+        const bnf = data.strategies.strategy_c.bnf_gain_kg_ha;
+        const ureaOffset = data.strategies.strategy_c.urea_offset_percent;
+        advFertilizerTitle.textContent = `Intercrop Legumes: Save ~${ureaOffset}% Synthetic Urea`;
+        advFertilizerText.textContent = `Legume root nodules will biologically fix +${bnf} kg N/ha of free organic nitrogen directly into topsoil. You can safely cut chemical urea fertilizer by ~${ureaOffset}%, saving input costs.`;
+      }
+
+      // 5. Bare Soil & Fallow Protection
+      if (advCoverTitle && advCoverText) {
+        const bareMonths = m.sentinel2.bare_months;
+        const twsTrend = m.grace.trend_mm_yr;
+        advCoverTitle.textContent = `Cover ${bareMonths} Months of Fallow Ground`;
+        advCoverText.textContent = `Sentinel-2 satellite imagery confirms your field stays bare for ~${Math.round(bareMonths * 30)} days. Plant green manure (Clover, Mustard, or Vetch) to prevent topsoil loss and buffer groundwater decline (${twsTrend} mm/yr).`;
+      }
+    }
 
     // Ensure state containers reflect active cards
     stateLoading.classList.remove('active');
